@@ -4,6 +4,6 @@ WORKDIR /app
 
 COPY package*.json ./
 
-EXPOSE 5173
+EXPOSE 80
 
-CMD ["sh", "-c", "npm install && npm run dev -- --host 0.0.0.0 --port 5173"]
+CMD ["sh", "-c", "npm install && npm run dev -- --host 0.0.0.0 --port 80"]
