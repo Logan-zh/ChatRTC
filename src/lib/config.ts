@@ -3,7 +3,7 @@ function resolveDefaultApiUrl() {
 		return 'http://localhost:3001';
 	}
 
-	return window.location.origin + "/ChatRTC";
+	return window.location.origin;
 }
 
 const defaultApiUrl = resolveDefaultApiUrl();
