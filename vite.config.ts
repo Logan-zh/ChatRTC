@@ -9,7 +9,7 @@ export default defineConfig(({ mode }) => {
         plugins: [react()],
         server: {
             host: '0.0.0.0',
-            allowedHosts: ['nonresisting-rockingly-armanda.ngrok-free.dev'],
+            allowedHosts: ['chatrtc-795816536821.europe-west1.run.app'],
             proxy: {
                 '/rooms': {
                     target: proxyTarget,
