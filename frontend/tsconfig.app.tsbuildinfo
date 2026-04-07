@@ -1,1 +1,0 @@
-{"root":["./src/app.tsx","./src/main.tsx","./src/types.ts","./src/vite-env.d.ts","./src/components/participantavatar.tsx","./src/hooks/useroomrtc.ts","./src/lib/api.ts","./src/lib/config.ts","./src/lib/identity.ts","./src/lib/socket.ts","./src/pages/homepage.tsx","./src/pages/roompage.tsx"],"version":"5.9.3"}

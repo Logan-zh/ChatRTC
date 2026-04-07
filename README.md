@@ -1,42 +1,18 @@
-# ChatRTC
+# ChatRTC API v0.1
 
-ChatRTC 是一個即時聊天室原型專案。
+NestJS + Socket.IO API，提供房間管理、聊天室訊息與 WebRTC signaling。
 
-## 已完成版本
+## 啟動
 
-### v0.1
-
-- NestJS + Socket.IO 後端 API
-- 房間建立、加入、離開與訊息傳送
-- WebRTC signaling
-
-### v0.2
-
-- 首頁可建立房間、列出房間
-- 房間頁提供即時文字聊天
-- 他人訊息顯示在右側，自己訊息顯示在左側，頭像位於訊息最外側
-- 開啟視訊後，訊息旁頭像切換成即時畫面
-
-## 專案結構
-
-- `backend/` NestJS + Socket.IO API
-- `frontend/` React + Vite 使用者介面
-- `docker-compose.yml` 本機開發環境
-
-## 本機開發
-
-### 使用 Docker Compose
+### Docker Compose
 
 ```bash
 docker compose up --build
 ```
 
-- 前端: `http://localhost:5173`
-- 後端: `http://localhost:3001`
+API 預設在 `http://localhost:3001`。
 
-### 個別啟動
-
-後端:
+### 本機
 
 ```bash
 cd backend
@@ -44,17 +20,51 @@ npm install
 npm run start:dev
 ```
 
-前端:
+## REST API
 
-```bash
-cd frontend
-npm install
-npm run dev
+- `GET /rooms` 取得房間列表
+- `GET /rooms/:roomId` 取得房間細節與目前成員、訊息
+- `POST /rooms` 建立房間
+- `POST /rooms/:roomId/join` 以 HTTP 加入房間
+- `POST /rooms/:roomId/leave` 離開房間
+
+建立房間 body:
+
+```json
+{
+  "name": "Daily Standup"
+}
 ```
 
-## 驗證過的 build 指令
+加入房間 body:
 
-```bash
-cd backend && npm run build
-cd frontend && npm run build
+```json
+{
+  "displayName": "Tow",
+  "userId": "optional-stable-user-id"
+}
 ```
+
+## Socket Events
+
+Client emit:
+
+- `room:join` `{ roomId, displayName, userId? }`
+- `room:leave` `void`
+- `chat:send` `{ roomId, message }`
+- `participant:media` `{ roomId, isVideoEnabled }`
+- `webrtc:offer` `{ roomId, targetUserId, sdp }`
+- `webrtc:answer` `{ roomId, targetUserId, sdp }`
+- `webrtc:ice-candidate` `{ roomId, targetUserId, candidate }`
+
+Server emit:
+
+- `room:joined`
+- `room:presence`
+- `chat:message`
+- `participant:media`
+- `webrtc:offer`
+- `webrtc:answer`
+- `webrtc:ice-candidate`
+
+`participant:media` 可用於前端在每個使用者卡片上顯示是否開啟視訊，再搭配 WebRTC stream 投射到頭像框區域。
