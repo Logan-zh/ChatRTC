@@ -172,6 +172,18 @@ export function useRoomRtc({
       return;
     }
 
+    if (typeof navigator === 'undefined') {
+      throw new Error('目前環境無法使用攝影機。');
+    }
+
+    if (!window.isSecureContext) {
+      throw new Error('手機瀏覽器需要 HTTPS 或 localhost 才能開啟攝影機。');
+    }
+
+    if (!navigator.mediaDevices?.getUserMedia) {
+      throw new Error('這個瀏覽器不支援攝影機存取，或目前頁面不是安全連線。');
+    }
+
     const stream = await navigator.mediaDevices.getUserMedia({
       video: { facingMode: 'user' },
       audio: false,
